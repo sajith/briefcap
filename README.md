@@ -1,11 +1,8 @@
 # Briefcap
 
-This program analyzes .pcap capture files, and prints a summary.
-
-`briefcap` looks at a pcap-format capture file (usually created by
-wireshark, tshark, tcpdump, etc.) and marvels at its contents, usually
-by printing out a summary.  Briefcap is interested only in ethernet,
-IPv4, TCP, UDP and ICMP.
+This program analyzes .pcap packet capture files (which are usually
+created by wireshark, tshark, or tcpdump), and prints a summary of
+ethernet, IPv4, TCP, UDP, and ICMP contents therein.
 
 # Usage
 
