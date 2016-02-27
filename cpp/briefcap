@@ -1,0 +1,20 @@
+#! /bin/bash
+
+# Briefcap - analyze .pcap capture files.
+
+# Simple convenience script to call briefcap.exe and pipe results
+# through less.
+
+prog=./briefcap.exe
+
+if [ ! -f $prog ]; then
+    make > /dev/null
+fi
+
+if [ $# -eq 0 ]; then
+    echo "Usage: ${0} <pcapfile>"
+    exit 1
+fi
+
+$prog $1 2>&1 | less
+
