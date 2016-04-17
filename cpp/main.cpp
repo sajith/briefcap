@@ -104,7 +104,7 @@ inline int is_verbose (void)
 // given an ethernet address, return colon-separated string format
 string eth2a (const u_int8_t eth[ETH_ALEN])
 {
-        if (eth == 0) {
+        if (eth == nullptr) {
                 cerr << "bad argument!\n";
                 return "";
         }
@@ -119,7 +119,7 @@ string eth2a (const u_int8_t eth[ETH_ALEN])
 // given an IP address, return
 string ip2a (const u_int32_t *ip)
 {
-        if (ip == 0) {
+        if (ip == nullptr) {
                 cerr << "bad argument!\n";
                 return "";
         }
@@ -157,7 +157,7 @@ void update_table (map<T, V> &m, const T &key, const V &val)
 // update ethernet counters
 void update_ether (const ethhdr *eth)
 {
-        if (eth == 0) {
+        if (eth == nullptr) {
                 cerr << "bad argument!\n";
                 return;
         }
@@ -295,7 +295,7 @@ void update_tcp_options (const tcphdr *tcph)
 // update TCP counters.
 void update_tcp (const tcphdr *tcph)
 {
-        if (tcph == 0) {
+        if (tcph == nullptr) {
                 cerr << "bad argument!\n";
                 return;
         }
@@ -316,7 +316,7 @@ void update_tcp (const tcphdr *tcph)
 // update UDP counters.
 void update_udp (const udphdr *udph)
 {
-        if (udph == 0) {
+        if (udph == nullptr) {
                 cerr << "bad argument!\n";
                 return;
         }
@@ -449,7 +449,7 @@ void update_icmp_paramprob (u_int8_t code)
 // update ICMP counters
 void update_icmp (const icmphdr *icmph, const u_char *bytes)
 {
-        if (icmph == 0) {
+        if (icmph == nullptr) {
                 cerr << "bad argument!\n";
                 return;
         }
@@ -490,7 +490,7 @@ void parse_tr (u_int8_t ip_p, const u_char *bytes)
         const size_t  iphl  = iph->ip_hl * 4;
 
         const u_char *trpkt = bytes + ETH_HLEN + iphl;
-        if (trpkt == 0) {
+        if (trpkt == nullptr) {
                 cerr << "bad transport header!\n";
                 return;
         }
@@ -523,14 +523,14 @@ void parse_tr (u_int8_t ip_p, const u_char *bytes)
 // Given an IP header, parse it!
 void parse_ip (const u_char *bytes)
 {
-        if (bytes == 0) {
+        if (bytes == nullptr) {
                 cerr << "bad argument!\n";
                 return;
         }
 
         ip *iph  = (ip *) (bytes + ETH_HLEN);
 
-        if (iph == 0) {
+        if (iph == nullptr) {
                 cerr << "bad IP header!\n";
                 return;
         }
@@ -574,7 +574,7 @@ void parse_arp (const u_char *bytes)
 {
         eth_arphdr *arph = (eth_arphdr *) (bytes + ETH_HLEN);
 
-        if (arph == 0) {
+        if (arph == nullptr) {
                 cerr << "bad argument!\n";
                 return;
         }
@@ -615,7 +615,7 @@ void pcap_callback (u_char            *user,
                     const pcap_pkthdr *h,
                     const u_char      *bytes)
 {
-        if (user == 0 or h == 0 or bytes == 0) {
+        if (user == nullptr or h == nullptr or bytes == nullptr) {
                 cerr << "bad args: user: " << user
                      << ", h:" << h << ", bytes:" << bytes <<"\n";
                 return;
