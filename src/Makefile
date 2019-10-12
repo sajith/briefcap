@@ -7,7 +7,7 @@ BRIEFCAP_SOURCES = main.cpp
 
 CC       = gcc
 CXX      = g++
-CFLAGS   = -O0 -ggdb -Wall -DDEBUG=1
+CFLAGS   = -O0 -ggdb -Wall -DDEBUG=1 -Wformat-truncation=0
 LDFLAGS  = -lpcap
 CXXFLAGS = -std=c++11 $(CFLAGS)
 
@@ -15,7 +15,7 @@ all: .deps $(BRIEFCAP_PROGRAM)
 
 sinclude .deps
 
-.deps: $(BRIEFCAP_SOURCES) 
+.deps: $(BRIEFCAP_SOURCES)
 	$(CXX) -MM $^ > $@
 
 BRIEFCAP_OBJECTS := $(patsubst %.cpp,%.o,$(BRIEFCAP_SOURCES))
