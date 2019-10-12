@@ -824,7 +824,7 @@ u_int32_t sum_values(const map<U,int> &m)
 {
     u_int32_t sum = 0;
 
-    for (auto it : m)
+    for (auto const &it : m)
     {
         sum += it.second;
     }
@@ -845,7 +845,7 @@ void show_percentage(const char *name, const map<U,V> &m,
         return;
     }
 
-    for (auto it : m)
+    for (auto const &it : m)
     {
         const U   &s = it.first;
         const V   &n = it.second;
@@ -888,7 +888,7 @@ void show_ip_proto_stats(void)
         return;
     }
 
-    for (auto it : g_eth_nwproto) {
+    for (auto const &it : g_eth_nwproto) {
         const u_int16_t x = ntohs(it.first);
         const int       n = it.second;
         const double    p = double(n) * 100 / g_n_packets;
@@ -944,7 +944,7 @@ void show_arp_parties(void)
         return;
     }
 
-    for (auto it : g_arp)
+    for (auto const &it : g_arp)
     {
         cout << setw(25) << it.first
              << " / "
@@ -963,7 +963,7 @@ void show_tr_proto(void)
         return;
     }
 
-    for (auto it : g_tr_proto)
+    for (auto const &it : g_tr_proto)
     {
         const u_int8_t  x = it.first;
         const int       n = it.second;
