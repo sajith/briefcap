@@ -1,6 +1,6 @@
 /*
  * Briefcap - analyze .pcap capture files.
- * 
+ *
  * Copyright (C) 2012, 2016 Sajith Sasidharan
  *
  * This program is free software: you can redistribute it and/or modify
@@ -161,7 +161,7 @@ void update_ether (const ethhdr *eth)
                 cerr << "bad argument!\n";
                 return;
         }
-        
+
         verbose ("source eth: %s", eth2a (eth->h_source).c_str());
         verbose ("dest eth: %s", eth2a (eth->h_dest).c_str());
         verbose ("eth_proto=0x%04x", eth->h_proto);
@@ -248,7 +248,7 @@ void update_tcp_options (const tcphdr *tcph)
                                 return;
                         }
                 }
-                
+
                 if (opt == TCPOPT_NOP) {
                         // HACK, because this is specific to NOP.
                         // But NOP is the only option that can
@@ -794,20 +794,20 @@ void show_percentage (const char *name, const map<U,V> &m,
                 const V   &n = it.second;
                 u_int32_t  t = 1;
                 double     p = 0;
-                
+
                 if (usetotal) {
-                        t = g_n_packets;                        
+                        t = g_n_packets;
                 } else {
                         t = sum_values (m);
                 }
-                
+
                 if (t != 0) {
                         p = double (n) * 100 / t;
                 } else {
                         p = 0; // not a very good approximation; but
                                // hopefully we should never hit this!
                 }
-                
+
                 cout << setw (25) << setfill (' ') << s
                      << setw (5)  << n
                      << setw (10) << p << " %\n";
