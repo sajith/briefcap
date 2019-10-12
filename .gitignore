@@ -1,3 +1,4 @@
-/cpp/.deps
-/cpp/briefcap.exe
-/cpp/main.o
+/src/.deps
+/src/briefcap.exe
+/src/main.o
+/src/compile_commands.json

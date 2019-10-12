@@ -6,8 +6,9 @@ ethernet, IPv4, TCP, UDP, and ICMP contents therein.
 
 # Compiling
 
-`cd cpp; make` should do it.  You need to have the appropriate libpcap
-libraries and headers (`libpcap-dev` on Debian systems) installed.
+`cd src && make` should do it.  You need to have the appropriate
+libpcap libraries and headers (`libpcap-dev` on Debian systems)
+installed.
 
 # Usage
 
