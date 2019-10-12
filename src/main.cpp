@@ -86,7 +86,7 @@ static map<string, int>    g_icmp_responses;
 
 static int g_verbose_flag = 0;
 
-inline int is_verbose(void)
+inline bool is_verbose(void)
 {
     return (g_verbose_flag != 0);
 }
