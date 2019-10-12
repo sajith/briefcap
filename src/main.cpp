@@ -239,15 +239,15 @@ void update_tcp_options(const tcphdr *tcph)
     }
 
     // TCP header size is 20.
-    u_int32_t       opsz = (tcph->doff - 5) * 4;
-    u_int32_t       opln = 0;
-    const u_int8_t *o    = (const u_int8_t *) tcph + 20;
+    u_int32_t  opsz = (tcph->doff - 5) * 4;
+    u_int32_t  opln = 0;
+    auto      *opts = reinterpret_cast<const u_int8_t *>(tcph + 20);
 
     bool nop_seen = false;
 
-    for (;opsz > 0; opsz -= opln, o += opln)
+    for (;opsz > 0; opsz -= opln, opts += opln)
     {
-        u_int32_t opt = o[0];
+        u_int32_t opt = opts[0];
 
         if (opt == TCPOPT_EOL)
         {
@@ -263,7 +263,7 @@ void update_tcp_options(const tcphdr *tcph)
             {
                 return;
             }
-            opln = o[1];
+            opln = opts[1];
             if (opln < 2 or opln > opsz)
             {
                 return;
@@ -494,7 +494,7 @@ void update_icmp(const icmphdr *icmph, const u_char *bytes)
         return;
     }
 
-    ip *iph  = (ip *) (bytes + ETH_HLEN);
+    auto iph = reinterpret_cast<const ip *>(bytes + ETH_HLEN);
 
     update_counter(g_icmp_srcs, ip2a(&iph->ip_src.s_addr));
     update_counter(g_icmp_dsts, ip2a(&iph->ip_dst.s_addr));
@@ -527,8 +527,8 @@ void parse_tr(u_int8_t ip_p, const u_char *bytes)
 {
     // skip null checks here since they've already been passed in
     // parse_ip()
-    const ip     *iph   = (ip *) (bytes + ETH_HLEN);
-    const size_t  iphl  = iph->ip_hl * 4;
+    auto   iph  = reinterpret_cast<const ip *>(bytes + ETH_HLEN);
+    size_t iphl = iph->ip_hl * 4;
 
     const u_char *trpkt = bytes + ETH_HLEN + iphl;
 
@@ -541,24 +541,16 @@ void parse_tr(u_int8_t ip_p, const u_char *bytes)
     switch (ip_p)
     {
     case IPPROTO_TCP:
-    {
-        tcphdr *tcph = (tcphdr *) trpkt;
-        update_tcp(tcph);
+        update_tcp(reinterpret_cast<const tcphdr *>(trpkt));
         break;
-    }
+
     case IPPROTO_UDP:
-    {
-        udphdr *udph = (udphdr *) trpkt;
-        update_udp(udph);
+        update_udp(reinterpret_cast<const udphdr *>(trpkt));
         break;
-    }
 
     case IPPROTO_ICMP:
-    {
-        icmphdr *icmph = (icmphdr *) trpkt;
-        update_icmp(icmph, bytes);
+        update_icmp(reinterpret_cast<const icmphdr *>(trpkt), bytes);
         break;
-    }
 
     default:
         verbose("unhandled protocol (ip_p=%d)", ip_p);
@@ -575,7 +567,7 @@ void parse_ip(const u_char *bytes)
         return;
     }
 
-    ip *iph  = (ip *) (bytes + ETH_HLEN);
+    auto iph  = reinterpret_cast<const ip *>(bytes + ETH_HLEN);
 
     if (iph == nullptr)
     {
@@ -623,7 +615,7 @@ struct eth_arphdr {
 // count ARP header contents
 void parse_arp(const u_char *bytes)
 {
-    eth_arphdr *arph = (eth_arphdr *) (bytes + ETH_HLEN);
+    auto arph = reinterpret_cast<const eth_arphdr *>(bytes + ETH_HLEN);
 
     if (arph == nullptr)
     {
@@ -683,7 +675,7 @@ void pcap_callback(u_char            *user,
 
     g_time_stamps.push_back(move(h->ts));
 
-    const ethhdr *eth = (ethhdr *) bytes;
+    auto eth = reinterpret_cast<const ethhdr *>(bytes);
 
     update_ether(eth);
 
