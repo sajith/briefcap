@@ -24,7 +24,7 @@ $(BRIEFCAP_PROGRAM): $(BRIEFCAP_OBJECTS)
 memcheck: $(BRIEFCAP_PROGRAM)
 	@command -v valgrind >/dev/null && \
 	for file in `find ../samples/ -name "*.pcap"`; do \
-	e=`valgrind ./$(BRIEFCAP_PROGRAM) $$file 2>&1 | grep "in use at exit:" | cut -c 14-`; \
+	e=`valgrind --tool=memcheck --leak-check=summary ./$(BRIEFCAP_PROGRAM) $$file 2>&1 | grep "in use at exit:" | cut -c 14-`; \
 	echo "valgrind $(BRIEFCAP_PROGRAM)" $$file ": $$e";\
 	done \
 
