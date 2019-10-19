@@ -1,7 +1,7 @@
 /*
  * Briefcap - analyze .pcap capture files.
  *
- * Copyright (C) 2012, 2016 Sajith Sasidharan
+ * Copyright (C) 2012, 2016, 2019 Sajith Sasidharan
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
