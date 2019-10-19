@@ -14,7 +14,7 @@ all: .deps $(BRIEFCAP_PROGRAM)
 sinclude .deps
 
 .deps: $(BRIEFCAP_SOURCES)
-	$(CXX) -MM $^ > $@
+	$(CXX) -MM $^ -MF $@
 
 BRIEFCAP_OBJECTS := $(patsubst %.cpp,%.o,$(BRIEFCAP_SOURCES))
 
