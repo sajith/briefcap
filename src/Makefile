@@ -1,7 +1,5 @@
 # Briefcap - analyze .pcap capture files.
 
-# TODO: Check for valgrind in $PATH
-
 BRIEFCAP_PROGRAM = briefcap.exe
 BRIEFCAP_SOURCES = main.cpp
 
@@ -24,9 +22,10 @@ $(BRIEFCAP_PROGRAM): $(BRIEFCAP_OBJECTS)
 	$(CXX) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 memcheck: $(BRIEFCAP_PROGRAM)
-	@for file in `find ../samples/ -name "*.pcap"`; do \
+	@command -v valgrind >/dev/null && \
+	for file in `find ../samples/ -name "*.pcap"`; do \
 	e=`valgrind ./$(BRIEFCAP_PROGRAM) $$file 2>&1 | grep "in use at exit:" | cut -c 14-`; \
-	echo $$file ":" $$e;\
+	echo "valgrind $(BRIEFCAP_PROGRAM)" $$file ": $$e";\
 	done \
 
 .PHONY: clean
